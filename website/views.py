@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note
+from .models import Note, User
 import json
 from . import db
 import os
@@ -9,6 +9,14 @@ import openai
 openai.organization = os.getenv("OPENAI_ORGANIZATION")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 views = Blueprint("views", __name__)
+
+
+@views.route("/testing", methods=["GET", "POST"])
+@login_required
+def testing():
+    notes = Note.query.all()
+    users = User.query.all()
+    return render_template("testing.html", notes=notes, users=users, user=current_user)
 
 
 @views.route("/create-note", methods=["GET", "POST"])

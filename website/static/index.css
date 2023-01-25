@@ -5,8 +5,12 @@
 #my-notes-div {
     font-size: 200%;
 }
+#all-notes-div {
+    font-size: 200%;
+    color:green
+}
 
 #my-testing-div {
     font-size: 200%;
-    color:green
+    color:turquoise
 }
