@@ -13,6 +13,7 @@ views = Blueprint("views", __name__)
 
 @views.route("/note/", defaults={"id": 1})
 @views.route("/note/<int:id>", methods=["GET", "POST"])
+@login_required
 def view_note(id):
     note = Note.query.get(id)
 
@@ -23,6 +24,14 @@ def view_note(id):
 @login_required
 def home():
     return render_template("home.html", user=current_user)
+
+
+@views.route("my-account", methods=["GET", "POST"])
+@login_required
+def my_account():
+    return render_template(
+        "account.html", user=current_user, note_count=len(current_user.notes)
+    )
 
 
 @views.route("/my-notes", methods=["GET", "POST"])
