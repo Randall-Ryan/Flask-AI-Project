@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}Note{% endblock %} {% block content
+%}
+<h1 align="center">Note</h1>
+<h3>Message: {{ note.data }}</h2>
+<h3>Date/Time: {{ note.date }}</h2>
+<img src="{{ note.img_src }}" />
+</br>
+</br>
+
+<button type="button" onClick="deleteNote({{ note.id }})">Delete Note</button>
+
+{% endblock %}
