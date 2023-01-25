@@ -11,32 +11,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 views = Blueprint("views", __name__)
 
 
-@views.route("/note/", defaults={"id": 1})
-@views.route("/note/<int:id>", methods=["GET", "POST"])
+@views.route("/create-note", methods=["GET", "POST"])
 @login_required
-def view_note(id):
-    note = Note.query.get(id)
-
-    return render_template("note.html", note=note, user=current_user)
-
-
-@views.route("/", methods=["GET", "POST"])
-@login_required
-def home():
-    return render_template("home.html", user=current_user)
-
-
-@views.route("my-account", methods=["GET", "POST"])
-@login_required
-def my_account():
-    return render_template(
-        "account.html", user=current_user, note_count=len(current_user.notes)
-    )
-
-
-@views.route("/my-notes", methods=["GET", "POST"])
-@login_required
-def my_notes():
+def create_note():
     if request.method == "POST":
         note = request.form.get("note")
 
@@ -49,6 +26,42 @@ def my_notes():
             db.session.add(new_note)
             db.session.commit()
             flash("Note added!", category="success")
+            return render_template("my_notes.html", user=current_user)
+    return render_template("create_note.html", user=current_user)
+
+
+@views.route("/all-notes", methods=["GET", "POST"])
+@login_required
+def view_all_notes():
+    notes = Note.query.all()
+    return render_template("all_notes.html", notes=notes, user=current_user)
+
+
+@views.route("/note/", defaults={"id": 1})
+@views.route("/note/<int:id>", methods=["GET", "POST"])
+@login_required
+def view_note(id):
+    note = Note.query.get(id)
+    return render_template("note.html", note=note, user=current_user)
+
+
+@views.route("/", methods=["GET", "POST"])
+@login_required
+def home():
+    return render_template("home.html", user=current_user)
+
+
+@views.route("/my-account", methods=["GET", "POST"])
+@login_required
+def my_account():
+    return render_template(
+        "account.html", user=current_user, note_count=len(current_user.notes)
+    )
+
+
+@views.route("/my-notes", methods=["GET"])
+@login_required
+def my_notes():
     return render_template("my_notes.html", user=current_user)
 
 
