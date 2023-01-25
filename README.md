@@ -4,6 +4,8 @@
 
 #### export OPENAI_ORGANIZATION = "123"
 
+#### export LEAGUE_API_KEY = "xyz"
+
 # if venv not already created:
 
 #### python3 -m venv venv
