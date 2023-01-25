@@ -1,3 +1,5 @@
+import base64
+import io
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from .models import Note, User
@@ -5,6 +7,12 @@ import json
 from . import db
 import os
 import openai
+from riotwatcher import LolWatcher, ApiError
+import urllib
+import matplotlib.pyplot as plot
+
+league_api_key = os.environ["LEAGUE_API_KEY"]
+lol_watcher = LolWatcher(league_api_key)
 
 openai.organization = os.getenv("OPENAI_ORGANIZATION")
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -14,9 +22,60 @@ views = Blueprint("views", __name__)
 @views.route("/testing", methods=["GET", "POST"])
 @login_required
 def testing():
+    my_region = "na1"
+    me = lol_watcher.summoner.by_name(my_region, "Smelly Sphincter")
+    my_ranked_stats = lol_watcher.league.by_summoner(my_region, me["id"])
+    versions = lol_watcher.data_dragon.versions_for_region(my_region)
+    champions_version = versions["n"]["champion"]
+    current_champ_list = lol_watcher.data_dragon.champions(champions_version)
     notes = Note.query.all()
     users = User.query.all()
-    return render_template("testing.html", notes=notes, users=users, user=current_user)
+
+    try:
+        response = lol_watcher.match.matchlist_by_puuid(my_region, me["puuid"])
+        # print(response)
+    except ApiError as err:
+        if err.response.status_code == 429:
+            print("We should retry in {} seconds.".format(err.headers["Retry-After"]))
+            print("this retry-after is handled by default by the RiotWatcher library")
+            print("future requests wait until the retry-after time passes")
+        elif err.response.status_code == 404:
+            print("Summoner with that ridiculous name not found.")
+        else:
+            raise
+
+    res = lol_watcher.match.by_id(my_region, response[0])
+
+    participants = res["info"]["participants"]
+
+    total_gold = 0
+    for participant in participants:
+        total_gold = int(participant["goldEarned"] + total_gold)
+
+    avg_gold = total_gold / len(participants)
+    for participant in participants:
+        plot.close()
+        x = ["Average gold earned", participant["summonerName"]]
+        goldearned = [avg_gold, participant["goldEarned"]]  # calculate sin(x)
+        plot.bar(x, goldearned)
+
+        for idx, value in enumerate(goldearned):
+            plot.text(idx, value, str(int(value)))
+
+        img = io.BytesIO()
+        plot.savefig(img, format="png")
+        img.seek(0)
+        participant["plot_data"] = urllib.parse.quote(
+            base64.b64encode(img.getvalue()).decode("utf-8")
+        )
+
+    return render_template(
+        "testing.html",
+        participants=participants,
+        notes=notes,
+        users=users,
+        user=current_user,
+    )
 
 
 @views.route("/create-note", methods=["GET", "POST"])

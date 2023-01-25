@@ -4,3 +4,7 @@ flask-sqlalchemy
 python-dotenv
 black
 openai
+riotwatcher
+pandas
+matplotlib
+seaborn
