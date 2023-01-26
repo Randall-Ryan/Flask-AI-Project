@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block title %}League form{% endblock %} {% block
+content %}
+<h1 align="center">League form</h1>
+
+<div class="suggested-names">
+  Suggested names:
+  <ul>
+    <li>Smelly Sphincter</li>
+    <li>Savory Sphincter</li>
+    <li>cjk159</li>
+    <li>obob12</li>
+    <li>MMOHAN1</li>
+    <li>OriginStory1</li>
+  </ul>
+</div>
+
+<form method="POST">
+  <h2>Get the most recent match stats for a summoner</h2>
+  <textarea
+    name="summoner"
+    id="summonerName"
+    class="form-control"
+    placeholder="Summoner Name"
+  ></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Get stats</button>
+  </div>
+</form>
+{% endblock %}

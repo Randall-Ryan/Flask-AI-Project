@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}League match{% endblock %} {% block
+content %}
+<h1 align="center">League match</h1>
+<h2>Showing stats for the most recent LoL game for {{ summoner }}</h1>
+        <h4>{{game_info["gameMode"]}} game</h4>
+            <h4>Total time: {{game_info["gameDuration"]}}</h4>
+
+                <h4>(Game id: {{game_info["gameId"]}})</h4>
+    <br />
+    {% for participant in participants %}
+    {% if participant['summonerName'] == summoner %}
+    <div class = "main_participant team{{participant['teamId']}}">
+        <h3>{{ participant['summonerName'] }}</h3>
+        <img class = "plot " src = "data:image/png;base64, {{ participant['plot_data'] }}">
+        <h5>Gold earned: {{ participant['goldEarned'] }}</h5>
+        <h5>Physical Damage: {{ participant['physicalDamageDealt'] }}</h5>
+        <h5>Magic Damage: {{ participant['magicDamageDealt'] }}</h5>
+        <h5>True damage: {{ participant['trueDamageDealt'] }}</h5>
+        <h5>Total damage: {{ participant['totalDamageDealt'] }}</h5>
+        </div>
+        {%endif%}
+        {% endfor %} 
+    {% for participant in participants %}
+    {% if participant['summonerName'] != summoner %}
+    <div class = "participant team{{participant['teamId']}}">
+    <h3>{{ participant['summonerName'] }}</h3>
+    <h5>Plot data: <img class = "plot" src = "data:image/png;base64, {{ participant['plot_data'] }}"></h5>
+    <h5>Gold earned: {{ participant['goldEarned'] }}</h5>
+    <h5>Physical Damage: {{ participant['physicalDamageDealt'] }}</h5>
+    <h5>Magic Damage: {{ participant['magicDamageDealt'] }}</h5>
+    <h5>True damage: {{ participant['trueDamageDealt'] }}</h5>
+    <h5>Total damage: {{ participant['totalDamageDealt'] }}</h5>
+    </div>
+    {%endif%}
+{% endfor %} 
+{% endblock %}

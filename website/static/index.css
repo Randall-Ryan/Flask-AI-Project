@@ -14,3 +14,26 @@
     font-size: 200%;
     color:turquoise
 }
+
+.participant {
+    width: 30%;
+    float: left;
+    margin: 1%;
+    text-align: center;
+}
+
+.main_participant {
+    margin: 5%;
+    width: 90%;
+    float: left;
+    background-color: grey;
+    text-align: center;
+    padding: 2%
+}
+
+.team100 {
+background-color: blue;
+}
+.team200 {
+    background-color: red;
+    }
