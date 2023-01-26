@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}My League Account{% endblock %} {%
+block content %}
+<h1 align="center">{{ user.summoner_name }}</h1>
+<div>
+  Summoner Id: {{ summonerInfo ['id'] }}
+  <br />
+  Summoner account Id: {{ summonerInfo ['accountId'] }}
+  <br />
+  Summoner puuid: {{ summonerInfo ['puuid'] }}
+  <br />
+  Summoner profileIconId: {{ summonerInfo ['profileIconId'] }}
+  <br />
+  Summoner Level: {{ summonerInfo ['summonerLevel'] }}
+  <br />
+</div>
+
+<a href="/match/{{user.summoner_name}}"
+  ><h1 id="my-recent-game">My most recent game</h1></a
+>
+<br />
+{% endblock %}

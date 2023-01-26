@@ -8,7 +8,10 @@ content %}
   <br />
   Last name: {{ user.last_name }}
   <br />
-  Summoner name: {{ user.summoner_name }}
+  Summoner name:
+  <a href="my-league-account/{{user.summoner_name}}"
+    >{{ user.summoner_name }}</a
+  >
   <br />
   Summoner name: {{ user.fortnite_name }}
   <br />

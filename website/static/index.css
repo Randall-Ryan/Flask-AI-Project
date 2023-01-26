@@ -1,26 +1,77 @@
 .test {
     color: red
 }
-#my-recent-game{
+.display-flex {
+    display: flex;
+}
+.homeImg{
+    border-style: solid;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 3%;
+    width: 800px;
+    height: 600px;
+}
+.home-div1 {
+    background-color: pink;
+    text-align: center;
+    z-index: 1;
+    width:50%;
+    position:relative
+}
+.home-div2 {
+    background-color: pink;
+    text-align: center;
+    z-index: 1;
+    width:50%;
+    float:right;
+    position:relative
+}
+
+.parent-div {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.child-div {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top:20%;
+    z-index: 999;
+}
+.body-background{
+    background-image: url("https://images.pexels.com/photos/1831234/pexels-photo-1831234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    opacity: 0.6;
+}
+#my-league-account{
     text-align: center;
     color: chocolate;
 }
+#my-fortnite-account{
+    text-align: center;
+    color: orangered;
+}
 
 #my-notes-div {
-    font-size: 200%;
+    font-size: 300%;
+    color: black;
 }
 #all-notes-div {
-    font-size: 200%;
-    color:green
+    font-size: 300%;
+    color:black
 }
 
 #my-league-div {
-    font-size: 200%;
-    color:purple
+    font-size: 300%;
+    color:black
 }
 #my-fortnite-div {
-    font-size: 200%;
-    color:turquoise
+    font-size: 300%;
+    color:black
 }
 
 .suggested-names {

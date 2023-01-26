@@ -10,12 +10,17 @@ import openai
 from riotwatcher import LolWatcher, ApiError
 import urllib
 import matplotlib.pyplot as plot
+import fortnite_api
 
+my_region = "na1"
+fortnite_api_key = os.environ["FORTNITE_API_KEY"]
 league_api_key = os.environ["LEAGUE_API_KEY"]
 lol_watcher = LolWatcher(league_api_key)
 
 openai.organization = os.getenv("OPENAI_ORGANIZATION")
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+fort_api = fortnite_api.FortniteAPI(api_key=fortnite_api_key)
 views = Blueprint("views", __name__)
 
 
@@ -93,7 +98,6 @@ def match(summoner):
     # past number of games?
     # TODO: make better check/error handling if summoner name exists
 
-    my_region = "na1"
     summoner = lol_watcher.summoner.by_name(my_region, summoner)
 
     try:
@@ -154,6 +158,34 @@ def league_form():
     return render_template("league_form.html", user=current_user)
 
 
+@views.route("/my-fortnite-account/", defaults={"id": 1})
+@views.route("/my-fortnite-account/<string:player>", methods=["GET", "POST"])
+@login_required
+def my_fortnite_account(player):
+    player_stats = fort_api.stats.fetch_by_name(name=player)
+
+    # get more info for summoner
+    return render_template(
+        "my_fortnite_account.html",
+        user=current_user,
+        player_stats=player_stats.raw_data,
+    )
+
+
+@views.route("/my-league-account/", defaults={"id": 1})
+@views.route("/my-league-account/<string:summoner>", methods=["GET", "POST"])
+@login_required
+def my_league_account(summoner):
+    summonerInfo = lol_watcher.summoner.by_name(my_region, summoner)
+
+    # get more info for summoner
+    return render_template(
+        "my_league_account.html",
+        user=current_user,
+        summonerInfo=summonerInfo,
+    )
+
+
 @views.route("/fortnite-match/", defaults={"id": 1})
 @views.route("/fortnite-match/<string:player>", methods=["GET", "POST"])
 @login_required
@@ -161,13 +193,14 @@ def fortnite_match(player):
     # past number of games?
     # TODO: make better check/error handling if summoner name exists
 
-    my_region = "na1"
-    print(player)
+    player_stats = fort_api.stats.fetch_by_name(name=player)
+
     return render_template(
         "fortnite_match.html",
         players=[],
         user=current_user,
         player=player,
+        stats=player_stats.raw_data,
     )
 
 
@@ -179,7 +212,7 @@ def fortnite_form():
         if not playerName:
             flash("Please enter a valid player", category="error")
         else:
-            return redirect(url_for("views.match", summoner=playerName))
+            return redirect(url_for("views.fortnite_match", player=playerName))
 
     return render_template("fortnite_form.html", user=current_user)
 
