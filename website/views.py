@@ -19,65 +19,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 views = Blueprint("views", __name__)
 
 
-@views.route("/testing", methods=["GET", "POST"])
-@login_required
-def testing():
-    my_region = "na1"
-    me = lol_watcher.summoner.by_name(my_region, "Smelly Sphincter")
-    my_ranked_stats = lol_watcher.league.by_summoner(my_region, me["id"])
-    versions = lol_watcher.data_dragon.versions_for_region(my_region)
-    champions_version = versions["n"]["champion"]
-    current_champ_list = lol_watcher.data_dragon.champions(champions_version)
-    notes = Note.query.all()
-    users = User.query.all()
-
-    try:
-        response = lol_watcher.match.matchlist_by_puuid(my_region, me["puuid"])
-        # print(response)
-    except ApiError as err:
-        if err.response.status_code == 429:
-            print("We should retry in {} seconds.".format(err.headers["Retry-After"]))
-            print("this retry-after is handled by default by the RiotWatcher library")
-            print("future requests wait until the retry-after time passes")
-        elif err.response.status_code == 404:
-            print("Summoner with that ridiculous name not found.")
-        else:
-            raise
-
-    res = lol_watcher.match.by_id(my_region, response[0])
-
-    participants = res["info"]["participants"]
-
-    total_gold = 0
-    for participant in participants:
-        total_gold = int(participant["goldEarned"] + total_gold)
-
-    avg_gold = total_gold / len(participants)
-    for participant in participants:
-        plot.close()
-        x = ["Average gold earned", participant["summonerName"]]
-        goldearned = [avg_gold, participant["goldEarned"]]  # calculate sin(x)
-        plot.bar(x, goldearned)
-
-        for idx, value in enumerate(goldearned):
-            plot.text(idx, value, str(int(value)))
-
-        img = io.BytesIO()
-        plot.savefig(img, format="png")
-        img.seek(0)
-        participant["plot_data"] = urllib.parse.quote(
-            base64.b64encode(img.getvalue()).decode("utf-8")
-        )
-
-    return render_template(
-        "testing.html",
-        participants=participants,
-        notes=notes,
-        users=users,
-        user=current_user,
-    )
-
-
 @views.route("/create-note", methods=["GET", "POST"])
 @login_required
 def create_note():
@@ -169,6 +110,8 @@ def match(summoner):
 
     res = lol_watcher.match.by_id(my_region, response[0])
     game_info = {}
+
+    # gameDuration is just the total num of seconds
     minutes = int(res["info"]["gameDuration"] / 60)
     seconds = res["info"]["gameDuration"] % 60
     game_info["gameDuration"] = f"{minutes}:{seconds}"
@@ -188,6 +131,7 @@ def match(summoner):
 
     for participant in participants:
         participant["plot_data"] = create_plot_for_participant(participant, averages)
+
     return render_template(
         "match.html",
         participants=participants,
