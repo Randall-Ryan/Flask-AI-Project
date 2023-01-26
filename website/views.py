@@ -210,6 +210,36 @@ def league_form():
     return render_template("league_form.html", user=current_user)
 
 
+@views.route("/fortnite-match/", defaults={"id": 1})
+@views.route("/fortnite-match/<string:player>", methods=["GET", "POST"])
+@login_required
+def fortnite_match(player):
+    # past number of games?
+    # TODO: make better check/error handling if summoner name exists
+
+    my_region = "na1"
+    print(player)
+    return render_template(
+        "fortnite_match.html",
+        players=[],
+        user=current_user,
+        player=player,
+    )
+
+
+@views.route("/fortnite-form", methods=["GET", "POST"])
+@login_required
+def fortnite_form():
+    if request.method == "POST":
+        playerName = request.form.get("player")
+        if not playerName:
+            flash("Please enter a valid player", category="error")
+        else:
+            return redirect(url_for("views.match", summoner=playerName))
+
+    return render_template("fortnite_form.html", user=current_user)
+
+
 def create_plot_for_participant(participant, averages):
     # TODO: make a better plot with matplotlib, bokeh, or seaborn
     plot.close()

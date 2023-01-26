@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% block title %}League match{% endblock %} {% block
+    content %}
+    <h2>Showing stats for the most recent fortnite game for {{ player }}</h1>
+            
+        {% for player in players %}
+            <div> {{player}}</div>
+    {% endfor %} 
+    {% endblock %}
+    

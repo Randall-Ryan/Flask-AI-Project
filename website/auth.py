@@ -40,6 +40,7 @@ def sign_up():
         first_name = request.form.get("firstName")
         last_name = request.form.get("lastName")
         summonerName = request.form.get("summonerName")
+        fortniteName = request.form.get("fortniteName")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
 
@@ -60,6 +61,7 @@ def sign_up():
                 first_name=first_name,
                 last_name=last_name,
                 summoner_name=summonerName,
+                fortnite_name=fortniteName,
                 password=generate_password_hash(password1, method="sha256"),
             )
             db.session.add(new_user)

@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}Fortnite form{% endblock %} {% block
+content %}
+<a href="fortnite-match/{{user.fortnite_name}}"
+  ><h1 id="my-recent-game">My most recent game</h1></a
+>
+<br />
+<div class="suggested-names">
+  <h2>Suggested recent games:</h2>
+  <a href="fortnite-match/IRONLIPS101"><h4>IRONLIPS101</h4></a>
+</div>
+
+<form method="POST">
+  <h2>Get the most recent match stats for a fortnite player</h2>
+  <textarea
+    name="player"
+    id="playerName"
+    class="form-control"
+    placeholder="Player Name"
+  ></textarea>
+  <br />
+  <div ah4gn="center">
+    <button type="submit" class="btn btn-primary">Get stats</button>
+  </div>
+</form>
+{% endblock %}

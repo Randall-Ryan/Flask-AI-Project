@@ -18,4 +18,5 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     last_name = db.Column(db.String(150))
     summoner_name = db.Column(db.String(150))
+    fortnite_name = db.Column(db.String(150))
     notes = db.relationship("Note")
