@@ -1,8 +1,11 @@
 {% extends "base.html" %} {% block title %}League form{% endblock %} {% block
 content %}
-
+<a href="match/{{user.summoner_name}}"
+  ><h1 id="my-recent-game">My most recent game</h1></a
+>
+<br />
 <div class="suggested-names">
-  <h2>Suggested names:</h2>
+  <h2>Suggested recent games:</h2>
   <a href="match/Smelly Sphincter"><h4>Smelly Sphincter</h4></a>
   <a href="match/Smelly Sphincter"><h4>Savory Sphincter</h4></a>
   <a href="match/cjk159"><h4>cjk159</h4></a>

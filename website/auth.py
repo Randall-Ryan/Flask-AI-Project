@@ -38,6 +38,8 @@ def sign_up():
     if request.method == "POST":
         email = request.form.get("email")
         first_name = request.form.get("firstName")
+        last_name = request.form.get("lastName")
+        summonerName = request.form.get("summonerName")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
 
@@ -56,6 +58,8 @@ def sign_up():
             new_user = User(
                 email=email,
                 first_name=first_name,
+                last_name=last_name,
+                summoner_name=summonerName,
                 password=generate_password_hash(password1, method="sha256"),
             )
             db.session.add(new_user)

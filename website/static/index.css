@@ -1,6 +1,10 @@
 .test {
     color: red
 }
+#my-recent-game{
+    text-align: center;
+    color: chocolate;
+}
 
 #my-notes-div {
     font-size: 200%;
