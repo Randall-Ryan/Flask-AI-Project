@@ -1,10 +1,13 @@
-flask
+# meh kinda irrelevant
 flask-login
-flask-sqlalchemy
+pandas
 python-dotenv
 black
+
+# should look into
 openai
 riotwatcher
-pandas
+flask-sqlalchemy
+flask
 matplotlib
 seaborn
