@@ -9,7 +9,12 @@ content %}
     {% for participant in participants %}
     {% if participant['summonerName'] == summoner %}
     <div class = "main_participant team{{participant['teamId']}}">
-        <h3>{{ participant['summonerName'] }} ({{ participant['championName'] }})</h3>
+<h3>hello its me fn jesus
+    hello it is me 
+    
+</h3>
+<h3>{{ participant['summonerName'] }} ({{ participant['championName'] }})</h3>
+        
         <h3>K/D/A: {{ participant['kills'] }}/{{ participant['deaths'] }}/{{ participant['assists']}}</h3>
         <img class = "plot " src = "data:image/png;base64, {{ participant['plot_data'] }}">
         <h5>Win: {{ participant['win'] }}</h5>
