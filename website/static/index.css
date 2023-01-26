@@ -15,6 +15,10 @@
     color:turquoise
 }
 
+.suggested-names {
+    text-align: center;
+}
+
 .participant {
     width: 30%;
     float: left;
@@ -32,8 +36,8 @@
 }
 
 .team100 {
-background-color: blue;
+background-color: lightblue;
 }
 .team200 {
-    background-color: red;
+    background-color: rgb(255, 129, 129);
     }

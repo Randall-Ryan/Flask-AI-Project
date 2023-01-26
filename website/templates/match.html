@@ -10,26 +10,40 @@ content %}
     {% for participant in participants %}
     {% if participant['summonerName'] == summoner %}
     <div class = "main_participant team{{participant['teamId']}}">
-        <h3>{{ participant['summonerName'] }}</h3>
+        <h3>{{ participant['summonerName'] }} ({{ participant['championName'] }})</h3>
+        <h3>K/D/A: {{ participant['kills'] }}/{{ participant['deaths'] }}/{{ participant['assists']}}</h3>
         <img class = "plot " src = "data:image/png;base64, {{ participant['plot_data'] }}">
+        <h5>Win: {{ participant['win'] }}</h5>
         <h5>Gold earned: {{ participant['goldEarned'] }}</h5>
         <h5>Physical Damage: {{ participant['physicalDamageDealt'] }}</h5>
         <h5>Magic Damage: {{ participant['magicDamageDealt'] }}</h5>
         <h5>True damage: {{ participant['trueDamageDealt'] }}</h5>
-        <h5>Total damage: {{ participant['totalDamageDealt'] }}</h5>
+        <h5>Total damage to champs: {{ participant['totalDamageDealtToChampions'] }}</h5>
+        <h5>Total damage: {{ participant['totalDamageTaken'] }}</h5>
+        <h5>Turret takedowns: {{ participant['turretTakedowns'] }}</h5>
+        <h5>Vision score: {{ participant['visionScore'] }}</h5>
+        <h5>Wards killed: {{ participant['wardsKilled'] }}</h5>
+        <h5>Wards placed: {{ participant['wardsPlaced'] }}</h5>
         </div>
         {%endif%}
         {% endfor %} 
     {% for participant in participants %}
     {% if participant['summonerName'] != summoner %}
     <div class = "participant team{{participant['teamId']}}">
-    <h3>{{ participant['summonerName'] }}</h3>
-    <h5>Plot data: <img class = "plot" src = "data:image/png;base64, {{ participant['plot_data'] }}"></h5>
+    <h3>{{ participant['summonerName'] }} ({{ participant['championName'] }})</h3>
+    <h3>K/D/A: {{ participant['kills'] }}/{{ participant['deaths'] }}/{{ participant['assists']}}</h3>
+    <h5><img class = "plot" src = "data:image/png;base64, {{ participant['plot_data'] }}"></h5>
+    <h5>Win: {{ participant['win'] }}</h5>
     <h5>Gold earned: {{ participant['goldEarned'] }}</h5>
     <h5>Physical Damage: {{ participant['physicalDamageDealt'] }}</h5>
     <h5>Magic Damage: {{ participant['magicDamageDealt'] }}</h5>
     <h5>True damage: {{ participant['trueDamageDealt'] }}</h5>
+    <h5>Total damage to champs: {{ participant['totalDamageDealtToChampions'] }}</h5>
     <h5>Total damage: {{ participant['totalDamageDealt'] }}</h5>
+    <h5>Turret takedowns: {{ participant['turretTakedowns'] }}</h5>
+    <h5>Vision score: {{ participant['visionScore'] }}</h5>
+    <h5>Wards killed: {{ participant['wardsKilled'] }}</h5>
+    <h5>Wards placed: {{ participant['wardsPlaced'] }}</h5>
     </div>
     {%endif%}
 {% endfor %} 

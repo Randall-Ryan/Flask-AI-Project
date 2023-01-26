@@ -7,7 +7,7 @@
 <img src="{{ note.img_src }}" />
 </br>
 </br>
-{% if user.id != note.id %}
+{% if user.id == note.user_id %}
 <button type="button" onClick="deleteNote({{ note.id }})">Delete Note</button>
 {% endif %}
 {% endblock %}
