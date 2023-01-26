@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block title %}My Fortnite Account{% endblock %} {%
+block content %}
+<h1 align="center">{{ user.fortnite_name }}</h1>
+<div>
+  info 1: {{ user.email }}
+  <br />
+  info 2: {{ player_stats }}
+  <br />
+</div>
+
+<a href="/fortnite-match/{{user.fortnite_name}}"
+  ><h1 id="my-recent-game">My most recent game</h1></a
+>
+<br />
+{% endblock %}
